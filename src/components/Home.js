@@ -1,146 +1,99 @@
-import React, { useState } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import CardFlip from 'react-card-flip';
-import royal from './royal.jpg'; // Import local images
-import royal1 from './royal1.jpg';
-import royal2 from './royal2.jpg';
-import car1 from './car1.jpeg';
-import bike4 from './bike4.jpg';
-import parts1 from './parts1.jpg';
+import Swal from 'sweetalert2';
 
-// CSS styles for the component
-const styles = {
-  homeContainer: {
-    fontFamily: 'Arial, sans-serif',
-  },
-  aboutUsBox: {
-    backgroundColor: 'black',
-    color: 'white',
-    padding: '20px',
-    marginTop: '30px',
-  },
-  sliderImageContainer: {
-    width: '100%',
-    height: '550px',
-  },
-  cardFront: {
-    width: '300px',
-    height: '350px',
-    objectFit: 'cover',
-  },
-  cardBack: {
-    width: '300px',
-    height: '350px', // Same as cardFront height
-    backgroundColor: 'black', // Adjust the background color as needed
-    color: 'white',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '10px',
-  },
-};
+export default function Login({ store }) {
+    function handleSubmit() {
+        console.log({
+            un: document.getElementById("idun").value,
+            pw: document.getElementById("idpw").value
+        });
+        // Simulate login process
+        const isSuccess = true; // Simulate successful login
+        if (isSuccess) {
+            // Sample response
+            const fakeResponse = { name: "John Doe", role: "admin" };
+            store.dispatch({ "type": "login", "data": { "un": fakeResponse.name, "role": fakeResponse.role } });
+            // Show login successful popup
+            Swal.fire({
+                title: "Login Successful",
+                icon: "success"
+            });
+            // Set timeout for automatic logout after 1 minute (60000 milliseconds)
+            setTimeout(() => {
+                store.dispatch({ "type": "logout" }); // Dispatch logout action
+                Swal.fire({
+                    title: "Logged out due to inactivity",
+                    icon: "info"
+                });
+            }, 60000); // 1 minute
+        } else {
+            // Show login failed message
+            Swal.fire({
+                title: "Login Unsuccessful",
+                icon: "error"
+            });
+        }
+    }
 
-const HomePage = () => {
-  // Images for the slideshow
-  const images = [royal1, royal2, royal]; // Use imported images
+    function handleMouseOver() {
+        document.getElementById("idlogin").style.boxShadow = "10px 10px 15px grey";
+    }
 
-  // State for controlling flip cards and current slide index
-  const [currentSlide, setCurrentSlide] = useState(0);
+    function handleMouseLeave() {
+        document.getElementById("idlogin").style.boxShadow = "0px 0px 0px grey";
+    }
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 900,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 5000, // Autoplay speed in milliseconds (5 seconds)
-  };
-
-  // Handle slide change
-  const handleSlideChange = (index) => {
-    setCurrentSlide(index);
-  };
-
-  // State variables for each card's flip status
-  const [isFlipped1, setIsFlipped1] = useState(false);
-  const [isFlipped2, setIsFlipped2] = useState(false);
-  const [isFlipped3, setIsFlipped3] = useState(false);
-
-  const handleCardClick1 = () => {
-    setIsFlipped1(!isFlipped1);
-  };
-
-  const handleCardClick2 = () => {
-    setIsFlipped2(!isFlipped2);
-  };
-
-  const handleCardClick3 = () => {
-    setIsFlipped3(!isFlipped3);
-  };
-
-  return (
-    <div className="home-container" style={styles.homeContainer}>
-      <h1>Welcome to Automobile Management Application</h1>
-      <Slider {...settings} beforeChange={handleSlideChange} initialSlide={currentSlide}>
-        {images.map((image, index) => (
-          <div key={index}>
-            {/* Use a container with fixed dimensions for the images */}
-            <div style={styles.sliderImageContainer}>
-              <img src={image} alt={`Slide ${index + 1}`} style={{ ...styles.cardFront, width: '100%', height: '100%' }} />
+    return (
+        <div>
+            <div className="login-container">
+                <div id="idlogin" className="login-form" onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
+                    <p style={{ fontSize: "25px", marginTop: "-20px" }}>Login Page</p> <br />
+                    Username: <input type="text" name="un" id="idun" /> <br /><br />
+                    Password: <input type="password" name="pw" id="idpw" /><br /><br /><br />
+                    <button onClick={handleSubmit}> Login </button>
+                </div>
             </div>
-          </div>
-        ))}
-      </Slider>
+            <div className="note-container">
+                <div className="note-box">
+                    <p>Note: The symbol on the right bottom selected changes to dark theme</p>
+                </div>
+            </div>
+            <style jsx>{`
+                .login-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                }
 
-      {/* About Us Box */}
-      <div className="about-us-box" style={styles.aboutUsBox}>
-        <h2>About Us</h2>
-        <p>
-          The proposed project is developed to manage the automobile in the automobile dealer company. Our Website, where finding and buying cars and bikes is made simple and stress-free. We've created a place where you can explore a wide range of vehicles, from cars to motorcycles, and easily make your purchase online. Our detailed listings provide all the information you need, like specs, photos, and prices, so you can make the right choice. Plus, our friendly team is here to help you along the way, whether you have questions or need assistance. Start your journey with us today and find the perfect ride for you!
-        </p>
-      </div>
+                .login-form {
+                    margin-top: -15vh;
+                    box-shadow: 0px 0px 0px grey; /* Initial shadow */
+                    transition: box-shadow 0.3s ease; /* Transition for smooth change */
+                }
 
-      {/* Flip Card Container */}
-      <div className="flip-card-container" style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-around' }}>
-        {/* First Card */}
-        <CardFlip isFlipped={isFlipped1} flipDirection="horizontal">
-          <div className="flip-card-front" onClick={handleCardClick1}>
-            <img src={car1} alt="Front" style={styles.cardFront} />
-          </div>
-          <div className="flip-card-back" onClick={handleCardClick1} style={styles.cardBack}>
-            <h3>Cars</h3>
-            <p>Explore our extensive collection of cars with prices and detailed descriptions. From sleek sedans to rugged SUVs, each vehicle comes with comprehensive information about features, specifications, and more. Find your dream car with ease.</p>
-          </div>
-        </CardFlip>
+                .login-form:hover {
+                    box-shadow: 10px 10px 15px grey; /* Shadow on hover */
+                }
 
-        {/* Second Card */}
-        <CardFlip isFlipped={isFlipped2} flipDirection="horizontal">
-          <div className="flip-card-front" onClick={handleCardClick2}>
-            <img src={bike4} alt="Front" style={styles.cardFront} />
-          </div>
-          <div className="flip-card-back" onClick={handleCardClick2} style={styles.cardBack}>
-            <h3>Bikes</h3>
-            <p>Discover our range of bikes with prices and detailed descriptions. From sporty cruisers to nimble street bikes, each motorcycle comes with comprehensive information about features, specifications, and more. Find your perfect ride with ease.</p>
-          </div>
-        </CardFlip>
+                .note-container {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: -210px;
+                }
 
-        {/* Third Card */}
-        <CardFlip isFlipped={isFlipped3} flipDirection="horizontal">
-          <div className="flip-card-front" onClick={handleCardClick3}>
-            <img src={parts1} alt="Front" style={styles.cardFront} />
-          </div>
-          <div className="flip-card-back" onClick={handleCardClick3} style={styles.cardBack}>
-            <h3>Store-Car & Bike Products</h3>
-            <p>Explore our automotive emporium for a wide range of car and bike accessories. From performance upgrades to stylish add-ons, we have something for everyone. With user-friendly navigation and secure payments, shopping is a breeze.</p>
-          </div>
-        </CardFlip>
-      </div>
-    </div>
-  );
-};
+                .note-box {
+                    border: 1px solid #ccc;
+                    padding: 10px; /* Adjusted padding */
+                    border-radius: 5px;
+                    width: 80%;
+                }
 
-export default HomePage;
+                .note-box p {
+                    text-align: center;
+                    font-size: 16px;
+                    color: black;
+                }
+            `}</style>
+        </div>
+    );
+}
