@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -28,7 +28,7 @@ export default function Details() {
     const [anchorEl, setAnchorEl] = useState(null);
 
     // Sample data of 20 cards
-    const data = [
+    const data = useMemo(() => [
       { sid: 1, name: "Car Washing Kit", price: "500", rating: "4.5", date: "2024-05-01" },
       { sid: 2, name: "Bike Gloves", price: "200", rating: "4", date: "2024-05-02" },
       { sid: 3, name: "Helmet", price: "1000", rating: "4.8", date: "2024-05-03" },
@@ -49,11 +49,11 @@ export default function Details() {
       { sid: 18, name: "Car Emergency Light", price: "250", rating: "4.5", date: "2024-05-18" },
       { sid: 19, name: "Car USB Charger", price: "100", rating: "4.7", date: "2024-05-19" },
       { sid: 20, name: "Car Wash Shampoo", price: "200", rating: "4.3", date: "2024-05-20" }
-  ];
+  ], []);
 
     useEffect(() => {
         setFilteredData(data);
-    }, [data]); // Added 'data' as a dependency
+    }, [data]);
 
     const handleFilter = () => {
         let filtered = data.filter((item) => {
