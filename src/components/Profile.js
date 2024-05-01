@@ -1,81 +1,44 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 export default function Profile() {
-    const [result, setResult] = useState(null);
-
-    useEffect(() => {
-        axios.get('http://localhost:8081/show')
-            .then((response) => {
-                console.log(JSON.stringify(response.data));
-                setResult(response.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            });
-    }, []);
+    const [result, setResult] = useState([
+        { name: "John Doe", email: "john@gmail.com", role: 1 },
+        { name: "Jane Doe", email: "jane@gmail.com", role: 2 },
+        { name: "Alice", email: "alice@gmail.com", role: 1 },
+        { name: "Bob", email: "bob@gmail.com", role: 2 },
+    ]);
 
     const handleDelete = (name) => {
-        axios.delete('http://localhost:8081/remove', { params: { name: name } })
-            .then(response => {
-                console.log(response.data);
-                // Update the result after deletion
-                setResult(result.filter(user => user.name !== name));
-            })
-            .catch(error => console.error('Error deleting data:', error));
+        setResult(result.filter(user => user.name !== name));
     };
 
-    const handleAllow = (name) => {
-        // Add your logic for 'allow' functionality here
-        console.log("Allowing access for user:", name);
-        axios.put('http://localhost:8081/allow', { name: name })
-            .then(response => {
-                console.log(response.data);
-                // Assuming the response includes updated user data,
-                // update the result state to reflect the changes.
-                setResult(result.map(user => user.name === name ? { ...user, allowed: true } : user));
-            })
-            .catch(error => console.error('Error allowing user:', error));
-    };
-
-    if (result === null) {
-        return (
-            <div style={styles.container}>
-                There is No Data to Display
-            </div>
-        );
-    } else {
-        return (
-            <div style={styles.container}>
-                <h2>User Data</h2>
-                <table style={styles.table}>
-                    <thead>
-                        <tr>
-                            <th style={styles.tableHeader}>Name</th>
-                            <th style={styles.tableHeader}>Email</th>
-                            <th style={styles.tableHeader}>Role</th>
-                            <th style={styles.tableHeader}>Actions</th>
+    return (
+        <div style={styles.container}>
+            <h2>User Data</h2>
+            <table style={styles.table}>
+                <thead>
+                    <tr>
+                        <th style={styles.tableHeader}>Name</th>
+                        <th style={styles.tableHeader}>Email</th>
+                        <th style={styles.tableHeader}>Role</th>
+                        <th style={styles.tableHeader}>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {result.map((user, index) => (
+                        <tr key={index} style={index % 2 === 0 ? styles.evenRow : styles.oddRow}>
+                            <td style={styles.tableData}>{user.name}</td>
+                            <td style={styles.tableData}>{user.email}</td>
+                            <td style={styles.tableData}>{user.role}</td>
+                            <td style={styles.tableData}>
+                                <button onClick={() => handleDelete(user.name)} style={styles.deleteButton}>Delete</button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {result.map((user, index) => (
-                            <tr key={index} style={index % 2 === 0 ? styles.evenRow : styles.oddRow}>
-                                <td style={styles.tableData}>{user.name}</td>
-                                <td style={styles.tableData}>{user.email}</td>
-                                <td style={styles.tableData}>{user.role}</td>
-                                <td style={styles.tableData}>
-                                    <button onClick={() => handleDelete(user.name)} style={styles.deleteButton}>Delete</button>
-                                    {!user.allowed && user.role === 'admin' && (
-                                        <button onClick={() => handleAllow(user.name)} style={styles.allowButton}>Allow</button>
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        );
-    }
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
 }
 
 const styles = {
@@ -106,15 +69,6 @@ const styles = {
     },
     deleteButton: {
         backgroundColor: 'darkblue',
-        color: 'white',
-        border: 'none',
-        padding: '8px 12px',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        marginRight: '5px', // Add margin to separate buttons
-    },
-    allowButton: {
-        backgroundColor: 'green',
         color: 'white',
         border: 'none',
         padding: '8px 12px',
