@@ -1,12 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import NavReducer from './components/reducers/NavReducer';
-import rootReducer from './components/reducers';
-import {createStore} from 'redux';
-
+import rootReducer from './components/reducers'; // Assuming NavReducer is combined in rootReducer
+import { createStore } from 'redux';
 
 const store = createStore(rootReducer);
 
