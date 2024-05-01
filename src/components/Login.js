@@ -43,13 +43,57 @@ export default function Login({ store }) {
     }
 
     return (
-        <div className="login-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}> {/* Centering the container */}
-            <div id="idlogin" className="login-form" onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave} style={{ marginTop: "-15vh" }}> {/* Adjusted marginTop */}
-                <p style={{  fontSize: "25px", marginTop: "-20px" }}>Login Page</p> <br />
-                Username: <input type="text" name="un" id="idun" /> <br /><br />
-                Password: <input type="password" name="pw" id="idpw" /><br /><br /><br />
-                <button onClick={handleSubmit}> Login </button>
+        <div>
+            <div className="login-container">
+                <div id="idlogin" className="login-form" onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
+                    <p style={{ fontSize: "25px", marginTop: "-20px" }}>Login Page</p> <br />
+                    Username: <input type="text" name="un" id="idun" /> <br /><br />
+                    Password: <input type="password" name="pw" id="idpw" /><br /><br /><br />
+                    <button onClick={handleSubmit}> Login </button>
+                </div>
             </div>
+            <div className="note-container">
+                <div className="note-box">
+                    <p>Note: The symbol on the right bottom selected changes to dark theme</p>
+                </div>
+            </div>
+            <style jsx>{`
+                .login-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                }
+
+                .login-form {
+                    margin-top: -15vh;
+                    box-shadow: 0px 0px 0px grey; /* Initial shadow */
+                    transition: box-shadow 0.3s ease; /* Transition for smooth change */
+                }
+
+                .login-form:hover {
+                    box-shadow: 10px 10px 15px grey; /* Shadow on hover */
+                }
+
+                .note-container {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: -210px;
+                }
+
+                .note-box {
+                    border: 1px solid #ccc;
+                    padding: 10px; /* Adjusted padding */
+                    border-radius: 5px;
+                    width: 80%;
+                }
+
+                .note-box p {
+                    text-align: center;
+                    font-size: 16px;
+                    color: black;
+                }
+            `}</style>
         </div>
     );
 }
