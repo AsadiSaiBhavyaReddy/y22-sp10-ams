@@ -6,7 +6,6 @@ import CardFlip from 'react-card-flip';
 import royal from './royal.jpg'; // Import local images
 import royal1 from './royal1.jpg';
 import royal2 from './royal2.jpg';
-import bike from './bike.jpeg';
 import car1 from './car1.jpeg';
 import bike4 from './bike4.jpg';
 import parts1 from './parts1.jpg';
