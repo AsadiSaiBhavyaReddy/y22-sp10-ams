@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import TextField from '@mui/material/TextField';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
 import Popover from '@mui/material/Popover';
+import AppBar from '@mui/material/AppBar'; // Added
+import Toolbar from '@mui/material/Toolbar'; // Added
+import IconButton from '@mui/material/IconButton'; // Added
+import Badge from '@mui/material/Badge'; // Added
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'; 
 
 export default function Details() {
-    const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
@@ -29,13 +27,33 @@ export default function Details() {
     const [cartOpen, setCartOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
 
+    // Sample data of 10 cards
+    const data = [
+      { sid: 1, name: "Car Washing Kit", price: "500", rating: "4.5", date: "2024-05-01" },
+      { sid: 2, name: "Bike Gloves", price: "200", rating: "4", date: "2024-05-02" },
+      { sid: 3, name: "Helmet", price: "1000", rating: "4.8", date: "2024-05-03" },
+      { sid: 4, name: "Car Safety Kit", price: "800", rating: "4.7", date: "2024-05-04" },
+      { sid: 5, name: "Wheel Brush", price: "300", rating: "4.5", date: "2024-05-05" },
+      { sid: 6, name: "Tire Inflator", price: "1500", rating: "4.6", date: "2024-05-06" },
+      { sid: 7, name: "Car Polish", price: "400", rating: "4.2", date: "2024-05-07" },
+      { sid: 8, name: "Car Wax", price: "600", rating: "4.9", date: "2024-05-08" },
+      { sid: 9, name: "Seat Covers", price: "1000", rating: "4.3", date: "2024-05-09" },
+      { sid: 10, name: "Dash Cam", price: "2000", rating: "4.1", date: "2024-05-10" },
+      { sid: 11, name: "Car Air Freshener", price: "150", rating: "4.6", date: "2024-05-11" },
+      { sid: 12, name: "Car Floor Mats", price: "300", rating: "4.3", date: "2024-05-12" },
+      { sid: 13, name: "Emergency Car Tool Kit", price: "700", rating: "4.7", date: "2024-05-13" },
+      { sid: 14, name: "Car Vacuum Cleaner", price: "1000", rating: "4.5", date: "2024-05-14" },
+      { sid: 15, name: "Car Phone Holder", price: "200", rating: "4.2", date: "2024-05-15" },
+      { sid: 16, name: "Windshield Sun Shade", price: "150", rating: "4.4", date: "2024-05-16" },
+      { sid: 17, name: "Car Trunk Organizer", price: "400", rating: "4.6", date: "2024-05-17" },
+      { sid: 18, name: "Car Emergency Light", price: "250", rating: "4.5", date: "2024-05-18" },
+      { sid: 19, name: "Car USB Charger", price: "100", rating: "4.7", date: "2024-05-19" },
+      { sid: 20, name: "Car Wash Shampoo", price: "200", rating: "4.3", date: "2024-05-20" }
+  ];
+  
+
     useEffect(() => {
-        axios.get('http://localhost:8081/store')
-            .then(response => {
-                setData(response.data);
-                setFilteredData(response.data);
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        setFilteredData(data);
     }, []);
 
     const handleFilter = () => {
@@ -146,25 +164,23 @@ export default function Details() {
                             Welcome to our store!
                         </Typography>
                         <Grid container spacing={3}>
-                            {filteredData.map((user, index) => (
-                                <Grid item key={user.sid} xs={12} sm={6} md={4}>
+                            {filteredData.map((item, index) => (
+                                <Grid item key={item.sid} xs={12} sm={6} md={4}>
                                     <Card variant="outlined">
                                         <CardContent>
-                                           
                                             <Typography variant="body1">
-                                                Product Name: {user.name}
-                                            </Typography>
-                                            
-                                            <Typography variant="body1">
-                                                Price: {user.price}
+                                                Product Name: {item.name}
                                             </Typography>
                                             <Typography variant="body1">
-                                                Rating: {user.rating}
+                                                Price: {item.price}
                                             </Typography>
                                             <Typography variant="body1">
-                                                Dates Available For Delivery: {user.date}
+                                                Rating: {item.rating}
                                             </Typography>
-                                            <Button variant="contained" color="primary" style={{ marginTop: '10px' }} onClick={() => handleAddToCart(user)}>
+                                            <Typography variant="body1">
+                                                Dates Available For Delivery: {item.date}
+                                            </Typography>
+                                            <Button variant="contained" color="primary" style={{ marginTop: '10px' }} onClick={() => handleAddToCart(item)}>
                                                 Add to Cart
                                             </Button>
                                         </CardContent>
