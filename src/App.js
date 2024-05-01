@@ -10,7 +10,6 @@ import Details from './components/Details';
 import Error from './components/Error';
 import Home from './components/Home';
 import Detail from './components/Detail';
-import Product from './components/Product';
 import Store from './components/Store';
 import Cart from './components/Cart';
 import Shop from './components/Shop';
