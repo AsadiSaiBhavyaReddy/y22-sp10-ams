@@ -38,25 +38,6 @@ export default function Profile() {
             .catch(error => console.error('Error allowing user:', error));
     };
 
-    const handleRegistration = (userData) => {
-        // Assuming you have userData with fields like name, email, role, etc.
-        axios.post('http://localhost:8081/register', userData)
-            .then(response => {
-                console.log(response.data);
-                // If the selected user is admin, allow them before successful registration
-                if (userData.role === 'admin') {
-                    handleAllow(userData.name);
-                }
-                // Now proceed with registration or display success message
-                // For example:
-                // Swal.fire({
-                //     title: "Registration Successful",
-                //     icon: "success"
-                // });
-            })
-            .catch(error => console.error('Error registering user:', error));
-    };
-
     if (result === null) {
         return (
             <div style={styles.container}>
