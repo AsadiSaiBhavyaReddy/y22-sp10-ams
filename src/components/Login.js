@@ -1,5 +1,5 @@
 import axios from 'axios';
-import login from './login.jpg'; 
+
 import Swal from 'sweetalert2';
 
 export default function Login({ store }) { 
