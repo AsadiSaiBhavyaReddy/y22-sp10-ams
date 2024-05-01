@@ -10,11 +10,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
 import Popover from '@mui/material/Popover';
-import AppBar from '@mui/material/AppBar'; // Added
-import Toolbar from '@mui/material/Toolbar'; // Added
-import IconButton from '@mui/material/IconButton'; // Added
-import Badge from '@mui/material/Badge'; // Added
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'; 
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 export default function Details() {
     const [filteredData, setFilteredData] = useState([]);
@@ -27,7 +27,7 @@ export default function Details() {
     const [cartOpen, setCartOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
 
-    // Sample data of 10 cards
+    // Sample data of 20 cards
     const data = [
       { sid: 1, name: "Car Washing Kit", price: "500", rating: "4.5", date: "2024-05-01" },
       { sid: 2, name: "Bike Gloves", price: "200", rating: "4", date: "2024-05-02" },
@@ -50,11 +50,10 @@ export default function Details() {
       { sid: 19, name: "Car USB Charger", price: "100", rating: "4.7", date: "2024-05-19" },
       { sid: 20, name: "Car Wash Shampoo", price: "200", rating: "4.3", date: "2024-05-20" }
   ];
-  
 
     useEffect(() => {
         setFilteredData(data);
-    }, []);
+    }, [data]); // Added 'data' as a dependency
 
     const handleFilter = () => {
         let filtered = data.filter((item) => {
